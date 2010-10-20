@@ -7426,7 +7426,7 @@ namespace MonoMac.AppKit {
 		void SizeToFit ();
 
 		[Export ("displayedWhenStopped")]
-		bool IsDisplayedWhenStopped { [Bind ("isDisplayedWhenStopped")] get; set }
+		bool IsDisplayedWhenStopped { [Bind ("isDisplayedWhenStopped")] get; set; }
 
 		//Detected properties
 		[Export ("indeterminate")]
@@ -11572,118 +11572,6 @@ namespace MonoMac.AppKit {
 		string LeafKeyPathForNode (NSTreeNode node);
 	}
 	
-	[BaseType (typeof (NSObjectController))]
-	interface NSArrayController {
-		[Export ("rearrangeObjects")]
-		void RearrangeObjects ();
-
-		[Export ("automaticRearrangementKeyPaths")]
-		NSArray AutomaticRearrangementKeyPaths ();
-
-		[Export ("didChangeArrangementCriteria")]
-		void DidChangeArrangementCriteria ();
-
-		[Export ("arrangeObjects:")]
-		NSArray ArrangeObjects (NSArray objects);
-
-		[Export ("arrangedObjects")]
-		NSObject ArrangedObjects ();
-
-		[Export ("addSelectionIndexes:")]
-		bool AddSelectionIndexes (NSIndexSet indexes);
-
-		[Export ("removeSelectionIndexes:")]
-		bool RemoveSelectionIndexes (NSIndexSet indexes);
-
-		[Export ("addSelectedObjects:")]
-		bool AddSelectedObjects (NSArray objects);
-
-		[Export ("removeSelectedObjects:")]
-		bool RemoveSelectedObjects (NSArray objects);
-
-		[Export ("add:")]
-		void Add (NSObject sender);
-
-		[Export ("remove:")]
-		void Remove (NSObject sender);
-
-		[Export ("insert:")]
-		void Insert (NSObject sender);
-
-		[Export ("canInsert")]
-		bool CanInsert ();
-
-		[Export ("selectNext:")]
-		void SelectNext (NSObject sender);
-
-		[Export ("selectPrevious:")]
-		void SelectPrevious (NSObject sender);
-
-		[Export ("canSelectNext")]
-		bool CanSelectNext ();
-
-		[Export ("canSelectPrevious")]
-		bool CanSelectPrevious ();
-
-		[Export ("addObject:")]
-		void AddObject (NSObject aObject);
-
-		[Export ("addObjects:")]
-		void AddObjects (NSArray objects);
-
-		[Export ("insertObject:atArrangedObjectIndex:")]
-		void InsertObjectatArrangedObjectIndex (NSObject aObject, uint index);
-
-		[Export ("insertObjects:atArrangedObjectIndexes:")]
-		void InsertObjectsatArrangedObjectIndexes (NSArray objects, NSIndexSet indexes);
-
-		[Export ("removeObjectAtArrangedObjectIndex:")]
-		void RemoveObjectAtArrangedObjectIndex (uint index);
-
-		[Export ("removeObjectsAtArrangedObjectIndexes:")]
-		void RemoveObjectsAtArrangedObjectIndexes (NSIndexSet indexes);
-
-		[Export ("removeObject:")]
-		void RemoveObject (NSObject aObject);
-
-		[Export ("removeObjects:")]
-		void RemoveObjects (NSArray objects);
-
-		//Detected properties
-		[Export ("automaticallyRearrangesObjects")]
-		bool AutomaticallyRearrangesObjects { get; set; }
-
-		[Export ("sortDescriptors")]
-		NSArray SortDescriptors { get; set; }
-
-		[Export ("filterPredicate")]
-		NSPredicate FilterPredicate { get; set; }
-
-		[Export ("clearsFilterPredicateOnInsertion")]
-		bool ClearsFilterPredicateOnInsertion { get; set; }
-
-		[Export ("avoidsEmptySelection")]
-		bool AvoidsEmptySelection { get; set; }
-
-		[Export ("preservesSelection")]
-		bool PreservesSelection { get; set; }
-
-		[Export ("selectsInsertedObjects")]
-		bool SelectsInsertedObjects { get; set; }
-
-		[Export ("alwaysUsesMultipleValuesMarker")]
-		bool AlwaysUsesMultipleValuesMarker { get; set; }
-
-		[Export ("selectionIndexes")]
-		NSIndexSet SelectionIndexes { get; set; }
-
-		[Export ("selectionIndex")]
-		uint SelectionIndex { get; set; }
-
-		[Export ("selectedObjects")]
-		NSArray SelectedObjects { get; set; }
-
-	}
 	
 	[BaseType (typeof (NSResponder), Delegates=new string [] { "Delegate" }, Events=new Type [] { typeof (NSWindowDelegate)})]
 	interface NSWindow {
