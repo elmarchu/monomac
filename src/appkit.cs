@@ -6684,7 +6684,7 @@ namespace MonoMac.AppKit {
 		bool WriteObjects (NSPasteboardReading [] objects);
 
 		[Export ("readObjectsForClasses:options:")]
-		NSObject [] ReadObjectsForClassesoptions (NSArray classArray, NSDictionary options);
+		NSObject [] ReadObjectsForClasses (NSObject [] classes, NSDictionary options);
 
 		[Export ("pasteboardItems")]
 		NSPasteboardItem [] PasteboardItems { get; }
@@ -6696,7 +6696,7 @@ namespace MonoMac.AppKit {
 		bool CanReadItemWithDataConformingToTypes (string [] utiTypes);
 
 		[Export ("canReadObjectForClasses:options:")]
-		bool CanReadObjectForClasses (NSObject [] classArray, NSDictionary options);
+		bool CanReadObjectForClasses (NSObject [] classes, NSDictionary options);
 
 		[Export ("declareTypes:owner:")]
 		int DeclareTypesowner (string [] newTypes, NSObject newOwner);
