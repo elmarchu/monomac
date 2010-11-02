@@ -1638,7 +1638,7 @@ namespace MonoMac.AppKit {
 		NSAttributedString AttributedAlternateTitle  { get; set; }
 
 		[Export ("bezelStyle")]
-		NSBezelStyle BezelStyle { get; }
+		NSBezelStyle BezelStyle { get; set; }
 
 		[Export ("allowsMixedState")]
 		bool AllowsMixedState { get; }
@@ -1704,32 +1704,32 @@ namespace MonoMac.AppKit {
 		[Export ("isOpaque")]
 		bool IsOpaque { get; } 
 	
-		[Export ("isEnabled")]
-		bool Enabled { get; set; }
+		[Export ("enabled")]
+		bool Enabled { [Bind ("isEnabled")] get; set; }
 	
 		[Export ("sendActionOn:")]
 		int SendActionOn (int mask);
 	
-		[Export ("isContinuous")]
-		bool IsContinuous { get; set; }
+		[Export ("continuous")]
+		bool IsContinuous { [Bind ("isContinuous")] get; set; }
 	
-		[Export ("isEditable")]
-		bool Editable { get; set; }
+		[Export ("editable")]
+		bool Editable { [Bind ("isEditable")] get; set; }
 	
-		[Export ("isSelectable")]
-		bool Selectable { get; set; }
+		[Export ("selectable")]
+		bool Selectable { [Bind ("isSelectable")] get; set; }
 	
-		[Export ("isBordered")]
-		bool Bordered { get; set; }
+		[Export ("bordered")]
+		bool Bordered { [Bind ("isBordered")] get; set; }
 	
-		[Export ("isBezeled")]
-		bool Bezeled { get; set; }
+		[Export ("bezeled")]
+		bool Bezeled { [Bind ("isBezeled")] get; set; }
 	
-		[Export ("isScrollable")]
-		bool Scrollable { get; set; }
+		[Export ("scrollable")]
+		bool Scrollable { [Bind ("isScrollable")] get; set; }
 	
-		[Export ("isHighlighted")]
-		bool Highlighted { get; set; }
+		[Export ("highlighted")]
+		bool Highlighted { [Bind ("isHighlighted")] get; set; }
 	
 		[Export ("alignment")]
 		NSTextAlignment Alignment { get; set; }
@@ -4865,7 +4865,7 @@ namespace MonoMac.AppKit {
 		NSMenu Supermenu { get; set; }
 
 		[Export ("autoenablesItems")]
-		bool AutoenablesItems { get; set; }
+		bool AutoEnablesItems { get; set; }
 
 		[Export ("delegate")]
 		NSObject WeakDelegate { get; set; }
@@ -5022,6 +5022,12 @@ namespace MonoMac.AppKit {
 
 	[BaseType (typeof (NSButtonCell))]
 	interface NSMenuItemCell {
+		[Export ("initTextCell:")]
+		IntPtr Constructor (string aString);
+	
+		[Export ("initImageCell:")]
+		IntPtr Constructor (NSImage  image);
+
 		[Export ("calcSize")]
 		void CalcSize ();
 
@@ -5779,7 +5785,8 @@ namespace MonoMac.AppKit {
 
 	[BaseType (typeof (NSObject), Delegates=new string [] { "WeakDelegate" }, Events=new Type [] { typeof (NSImageDelegate)})]
 	interface NSImage {
-		[Static, Export ("imageNamed:")]
+		[Static]
+		[Export ("imageNamed:")]
 		NSImage ImageNamed (string name);
 
 		[Export ("initWithSize:")]
@@ -7099,10 +7106,139 @@ namespace MonoMac.AppKit {
 		bool PullsDown { get; set; }
 
 		[Export ("autoenablesItems")]
+		bool AutoEnablesItems { get; set; }
+
+		[Export ("preferredEdge")]
+		NSRectEdge PreferredEdge { get; set; }
+
+	}
+
+
+	[BaseType (typeof (NSMenuItemCell))]
+	interface NSPopUpButtonCell {
+		[Export ("initTextCell:")]
+		IntPtr Constructor (string aString);
+	
+		[Export ("initImageCell:")]
+		IntPtr Constructor (NSImage  image);
+
+		[Export ("initTextCell:pullsDown:")]
+		IntPtr Constructor (string stringValue, bool pullDown);
+
+		[Export ("addItemWithTitle:")]
+		void AddItem (string title);
+
+		[Export ("addItemsWithTitles:")]
+		void AddItems (string [] itemTitles);
+
+		[Export ("insertItemWithTitle:atIndex:")]
+		void InsertItem (string title, int index);
+
+		[Export ("removeItemWithTitle:")]
+		void RemoveItem (string title);
+
+		[Export ("removeItemAtIndex:")]
+		void RemoveItemAt (int index);
+
+		[Export ("removeAllItems")]
+		void RemoveAllItems ();
+
+		[Export ("itemArray")]
+		NSMenuItem [] Items { get; }
+
+		[Export ("numberOfItems")]
+		int Count { get; }
+
+		[Export ("indexOfItem:")]
+		int IndexOf (NSMenuItem item);
+
+		[Export ("indexOfItemWithTitle:")]
+		int IndexOfItemWithTitle (string title);
+
+		[Export ("indexOfItemWithTag:")]
+		int IndexOfItemWithTag (int tag);
+
+		[Export ("indexOfItemWithRepresentedObject:")]
+		int IndexOfItemWithRepresentedObject (NSObject obj);
+
+		[Export ("indexOfItemWithTarget:andAction:")]
+		int IndexOfItemWithTargetandAction (NSObject target, Selector actionSelector);
+
+		[Export ("itemAtIndex:")]
+		NSMenuItem ItemAt (int index);
+
+		[Export ("itemWithTitle:")]
+		NSMenuItem ItemWithTitle (string title);
+
+		[Export ("lastItem")]
+		NSMenuItem LastItem { get; }
+
+		[Export ("selectItem:")]
+		void SelectItem (NSMenuItem item);
+
+		[Export ("selectItemAtIndex:")]
+		void SelectItemAt (int index);
+
+		[Export ("selectItemWithTitle:")]
+		void SelectItemWithTitle (string title);
+
+		[Export ("selectItemWithTag:")]
+		bool SelectItemWithTag (int tag);
+
+		[Export ("setTitle:")]
+		void SetTitle (string aString);
+
+		[Export ("selectedItem")]
+		NSMenuItem SelectedItem { get; }
+
+		[Export ("indexOfSelectedItem")]
+		int SelectedItemIndex { get; }
+
+		[Export ("synchronizeTitleAndSelectedItem")]
+		void SynchronizeTitleAndSelectedItem ();
+
+		[Export ("itemTitleAtIndex:")]
+		string GetItemTitle (int index);
+
+		[Export ("itemTitles")]
+		string [] ItemTitles { get; }
+
+		[Export ("titleOfSelectedItem")]
+		string TitleOfSelectedItem { get; }
+
+		[Export ("attachPopUpWithFrame:inView:")]
+		void AttachPopUp (RectangleF cellFrame, NSView inView);
+
+		[Export ("dismissPopUp")]
+		void DismissPopUp ();
+
+		[Export ("performClickWithFrame:inView:")]
+		void PerformClick (RectangleF withFrame, NSView controlView);
+
+		//Detected properties
+		[Export ("menu")]
+		NSMenu Menu { get; set; }
+
+		[Export ("pullsDown")]
+		bool PullsDown { get; set; }
+
+		[Export ("autoenablesItems")]
 		bool AutoenablesItems { get; set; }
 
 		[Export ("preferredEdge")]
 		NSRectEdge PreferredEdge { get; set; }
+
+		[Export ("usesItemFromMenu")]
+		bool UsesItemFromMenu { get; set; }
+
+		[Export ("altersStateOfSelectedItem")]
+		bool AltersStateOfSelectedItem { get; set; }
+
+		[Export ("arrowPosition")]
+		NSPopUpArrowPosition ArrowPosition { get; set; }
+
+		[Export ("objectValue")]
+		NSObject ObjectValue { get; set; }
 
 	}
 
@@ -8996,7 +9132,7 @@ namespace MonoMac.AppKit {
 		[Export ("lockFocusIfCanDrawInContext:")]
 		bool LockFocusIfCanDrawInContext (NSGraphicsContext context);
 
-		[Export ("focusView")]
+		[Export ("focusView")][Static]
 		NSView FocusView ();
 
 		[Export ("visibleRect")]
@@ -9328,7 +9464,7 @@ namespace MonoMac.AppKit {
 	[BaseType (typeof (NSResponder))]
 	interface NSViewController {
 		[Export ("initWithNibName:bundle:")]
-		IntPtr Constructor (string nibNameOrNil, NSBundle nibBundleOrNil);
+		IntPtr Constructor ([NullAllowed] string nibNameOrNil, [NullAllowed] NSBundle nibBundleOrNil);
 
 		[Export ("loadView")]
 		void LoadView ();
@@ -9609,7 +9745,7 @@ namespace MonoMac.AppKit {
 		[Wrap ("WeakDelegate")][NullAllowed]
 		NSTableViewDelegate Delegate { get; set; }
 	
-		[Export ("headerView")]
+		[Export ("headerView"), NullAllowed]
 		NSTableHeaderView HeaderView { get; set; }
 	
 		[Export ("cornerView")]
@@ -12528,4 +12664,27 @@ namespace MonoMac.AppKit {
 		NSRunningApplication CurrentApplication { get ; }
 	
 	}	
+
+	[BaseType (typeof (NSControl))]
+	interface NSStepper {
+		[Export ("initWithFrame:")]
+		IntPtr Constructor (RectangleF frameRect);
+
+		//Detected properties
+		[Export ("minValue")]
+		double MinValue { get; set; }
+
+		[Export ("maxValue")]
+		double MaxValue { get; set; }
+
+		[Export ("increment")]
+		double Increment { get; set; }
+
+		[Export ("valueWraps")]
+		bool ValueWraps { get; set; }
+
+		[Export ("autorepeat")]
+		bool Autorepeat { get; set; }
+
+	}
 }

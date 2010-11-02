@@ -1,4 +1,9 @@
 //
+// NSButton.cs: Support for the NSButton class
+//
+// Author:
+//   Michael Hutchinson (mhutchinson@novell.com)
+//
 // Copyright 2010, Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
@@ -21,56 +26,16 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 using System;
-using System.Drawing;
-using MonoMac.Foundation;
-using MonoMac.AppKit;
 using MonoMac.ObjCRuntime;
+using MonoMac.Foundation;
 
-[Register]
-public class MyView : NSView {
-	public MyView (RectangleF frame) : base (frame) {
-	}
+namespace MonoMac.AppKit {
 
-	public override void DrawRect (RectangleF rect) {
-		Graphics g = Graphics.FromHwnd (Handle);
-		g.FillRectangle (Brushes.Red, 0, 0, 200, 100);
-		g.Dispose ();
-	}
-}
-
-[Register]
-public class HelloAppDelegate : NSApplicationDelegate {
-	NSWindow window;
-	NSTextField text;
-	MyView view;
-	
-	public HelloAppDelegate ()
-	{
-	}
-
-	public override void FinishedLaunching (NSObject notification)
-	{
-		view = new MyView (new RectangleF (10, 10, 200, 200));
-
-		text = new NSTextField (new RectangleF (44, 32, 232, 31)) {
-			StringValue = "Hello Mono Mac!"
-		};
-			
-		window = new NSWindow (new RectangleF (50, 50, 400, 400), (NSWindowStyle) (1 | (1 << 1) | (1 << 2) | (1 << 3)), 0, false);
-		window.ContentView.AddSubview (text);
-		window.ContentView.AddSubview (view);
-
-
-
-		window.MakeKeyAndOrderFront (this);
+	public partial class NSButton {
+		public new NSButtonCell Cell {
+			get { return (NSButtonCell)base.Cell; }
+			set { base.Cell = value; }
+		}
 	}
 }
 
-class Demo {
-	static void Main (string [] args)
-	{
-		NSApplication.Init ();
-		NSApplication.InitDrawingBridge ();
-		NSApplication.Main (args);
-	}		
-}

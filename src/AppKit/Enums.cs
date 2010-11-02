@@ -628,7 +628,7 @@ namespace MonoMac.AppKit {
 	}
 	
 	public enum NSBezelStyle {
-		Rounded,
+		Rounded = 1,
 		RegularSquare,
 		ThickSquare,
 		ThickerSquare,
@@ -641,7 +641,7 @@ namespace MonoMac.AppKit {
 		TexturedRounded,
 		RoundRect,
 		Recessed,
-	    RoundedDisclosure
+		RoundedDisclosure
 	}
 
 	public enum NSGradientType {
@@ -1355,5 +1355,17 @@ namespace MonoMac.AppKit {
 
 	public enum NSProgressIndicatorStyle {
 		Bar, Spinning
+	}
+
+	public enum NSPopUpArrowPosition {
+		None,
+		Center,
+		Bottom
+	}
+
+	public static class NSFileTypeForHFSTypeCode {
+		public static string ComputerIcon = "root";
+		public static string DesktopIcon = "desk";
+		public static string FinderIcon = "FNDR";
 	}
 } 

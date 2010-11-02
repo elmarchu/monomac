@@ -1,4 +1,9 @@
 //
+// ActionDispatcher.cs: Helper to map Target-Action to event
+//
+// Author:
+//   Michael Hutchinson <mhutchinson@novell.com>
+//
 // Copyright 2010, Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
@@ -21,56 +26,24 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 using System;
-using System.Drawing;
-using MonoMac.Foundation;
-using MonoMac.AppKit;
 using MonoMac.ObjCRuntime;
+using MonoMac.Foundation;
 
-[Register]
-public class MyView : NSView {
-	public MyView (RectangleF frame) : base (frame) {
-	}
-
-	public override void DrawRect (RectangleF rect) {
-		Graphics g = Graphics.FromHwnd (Handle);
-		g.FillRectangle (Brushes.Red, 0, 0, 200, 100);
-		g.Dispose ();
-	}
-}
-
-[Register]
-public class HelloAppDelegate : NSApplicationDelegate {
-	NSWindow window;
-	NSTextField text;
-	MyView view;
-	
-	public HelloAppDelegate ()
+namespace MonoMac.AppKit
+{
+	[Register ("__monomac_internal_ActionDispatcher")]
+	internal class ActionDispatcher : NSObject
 	{
+		const string skey = "__monomac_internal_ActionDispatcher_activated:";
+		public static Selector Action = new Selector (skey);
+
+		public EventHandler Activated;
+
+		[Export (skey)]
+		public void OnActivated (NSObject sender)
+		{
+			if (Activated != null)
+				Activated (sender, EventArgs.Empty);
+		}
 	}
-
-	public override void FinishedLaunching (NSObject notification)
-	{
-		view = new MyView (new RectangleF (10, 10, 200, 200));
-
-		text = new NSTextField (new RectangleF (44, 32, 232, 31)) {
-			StringValue = "Hello Mono Mac!"
-		};
-			
-		window = new NSWindow (new RectangleF (50, 50, 400, 400), (NSWindowStyle) (1 | (1 << 1) | (1 << 2) | (1 << 3)), 0, false);
-		window.ContentView.AddSubview (text);
-		window.ContentView.AddSubview (view);
-
-
-
-		window.MakeKeyAndOrderFront (this);
-	}
-}
-
-class Demo {
-	static void Main (string [] args)
-	{
-		NSApplication.Init ();
-		NSApplication.InitDrawingBridge ();
-		NSApplication.Main (args);
-	}		
 }
